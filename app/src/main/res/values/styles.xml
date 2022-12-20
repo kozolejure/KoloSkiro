@@ -26,5 +26,12 @@
 
     </style>
 
+    <style name="EditText">
+        <item name="backgroundTint">@color/lightRed</item>
 
+
+
+
+
+    </style>
 </resources>

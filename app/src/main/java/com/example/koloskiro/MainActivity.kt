@@ -1,19 +1,24 @@
 package com.example.koloskiro
 
 import android.content.ContentValues.TAG
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+
 private lateinit var auth: FirebaseAuth
 
-
+private var numOfFails = 0
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,39 +27,90 @@ class MainActivity : AppCompatActivity() {
         //setup
         auth = Firebase.auth
         val registerClicked = findViewById<Button>(R.id.register) as Button
-
         val usernameText = findViewById<EditText>(R.id.userName) as EditText
-
-
         val paswordText = findViewById<EditText>(R.id.password) as EditText
-
+        val loginButton = findViewById<Button>(R.id.loginButton) as Button
+        var fogotpassword = findViewById<TextView>(R.id.passwordReset) as TextView
+        val text = "<u>Pozabljeno geslo?</u>"
+        fogotpassword.setText(Html.fromHtml(text))
 
         //end of setup
 
         registerClicked.setOnClickListener {
+            val password  = paswordText.text.toString()
+            val email = usernameText.text.toString()
+            val intent = Intent(this,RegisterActivity::class.java)
+            startActivity(intent)
+/*
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "createUserWithEmail:success")
+                                val user = auth.currentUser
+                                Toast.makeText(this@MainActivity, "Registracija ", Toast.LENGTH_SHORT).show()
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                Toast.makeText(baseContext, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show()
+
+
+                                // updateUI(null)
+                            }
+                        }
+
+
+*/
 
 
 
+
+
+
+        }
+
+        loginButton.setOnClickListener{
             val password  = paswordText.text.toString()
             val email = usernameText.text.toString()
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
-                        val user = auth.currentUser
-                        Toast.makeText(this@MainActivity, "Registracija ", Toast.LENGTH_SHORT).show()
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
-                       // updateUI(null)
+
+            if (password.isEmpty() or email.isEmpty()){
+
+                Toast.makeText(this@MainActivity,
+                    "Polja ne smejo biti prazna ",
+                    Toast.LENGTH_SHORT).show()
+
+            }
+            else {
+
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(this@MainActivity, "Prijava uspešna", Toast.LENGTH_SHORT)
+                                .show()
+                            val user = auth.currentUser
+                            //updateUI(user)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                baseContext, "Poskusi ponovno",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            numOfFails += 1
+                            if (numOfFails >= 2){
+
+                                fogotpassword.visibility = View.VISIBLE
+
+                            }
+                            //updateUI(null)
+                        }
                     }
-                }
 
-
+            }
         }
 
 
