@@ -8,13 +8,16 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 private lateinit var auth: FirebaseAuth
+
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
+        auth = Firebase.auth
         val nameInput = findViewById<EditText>(R.id.name) as EditText
         val surnameInput = findViewById<EditText>(R.id.surname) as EditText
         val addresInput = findViewById<EditText>(R.id.naslov) as EditText
@@ -46,25 +49,24 @@ class RegisterActivity : AppCompatActivity() {
 
             }
             else{
-
-
-                auth.createUserWithEmailAndPassword(emailInput.text.toString(), passwordInputOne.text.toString())
+                var email = emailInput.text.toString()
+                var password = passwordInputOne.text.toString()
+                auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
                             val user = auth.currentUser
 
+                            Toast.makeText(this@RegisterActivity, "Registracija uspešna", Toast.LENGTH_SHORT).show()
 
                             val intent = Intent(this,MainActivity::class.java)
                             startActivity(intent)
 
-
-                            Toast.makeText(this@RegisterActivity, "Registracija ", Toast.LENGTH_SHORT).show()
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(baseContext, "Authentication failed.",
+                            Toast.makeText(baseContext, "Račun na naslov že obstaja",
                                 Toast.LENGTH_SHORT).show()
 
 
