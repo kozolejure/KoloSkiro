@@ -37,38 +37,12 @@ class MainActivity : AppCompatActivity() {
         //end of setup
 
         registerClicked.setOnClickListener {
-            val password  = paswordText.text.toString()
-            val email = usernameText.text.toString()
             val intent = Intent(this,RegisterActivity::class.java)
             startActivity(intent)
-/*
-                    auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success")
-                                val user = auth.currentUser
-                                Toast.makeText(this@MainActivity, "Registracija ", Toast.LENGTH_SHORT).show()
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                Toast.makeText(baseContext, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show()
-
-
-                                // updateUI(null)
-                            }
-                        }
-
-
-*/
-
-
-
-
-
 
         }
+
+
 
         loginButton.setOnClickListener{
             val password  = paswordText.text.toString()
