@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "448603845780",
+    "project_id": "koloskiro-b9a48",
+    "storage_bucket": "koloskiro-b9a48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448603845780:android:612841327dff6f2ff13081",
+        "android_client_info": {
+          "package_name": "com.example.koloskiro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448603845780-j74acp8phidbn5k42f0v25oji6691588.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw1eyIyOJQrs0FMVjbUAwHzbZusWvg_Zg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448603845780-j74acp8phidbn5k42f0v25oji6691588.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
