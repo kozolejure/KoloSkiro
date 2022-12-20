@@ -29,8 +29,14 @@
     <style name="EditText">
         <item name="backgroundTint">@color/lightRed</item>
 
+    </style>
 
 
+    <style name="heading">
+
+        <item name="android:textSize">23dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
 
 
     </style>
