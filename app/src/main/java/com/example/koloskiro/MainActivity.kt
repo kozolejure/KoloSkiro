@@ -37,37 +37,42 @@ class MainActivity : AppCompatActivity() {
         //end of setup
 
         registerClicked.setOnClickListener {
-            val intent = Intent(this,RegisterActivity::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+
+        }
+
+        fogotpassword.setOnClickListener {
+
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+
 
         }
 
 
 
-        loginButton.setOnClickListener{
-            val password  = paswordText.text.toString()
+        loginButton.setOnClickListener {
+            val password = paswordText.text.toString()
             val email = usernameText.text.toString()
 
 
-            if (password.isEmpty() or email.isEmpty()){
+            if (password.isEmpty() or email.isEmpty()) {
 
-                Toast.makeText(this@MainActivity,
+                Toast.makeText(
+                    this@MainActivity,
                     "Polja ne smejo biti prazna ",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
 
-            }
-            else {
+            } else {
 
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(this@MainActivity, "Prijava uspešna", Toast.LENGTH_SHORT)
-                                .show()
                             val user = auth.currentUser
-                            //updateUI(user)
                         } else {
-                            // If sign in fails, display a message to the user.
+
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
                             Toast.makeText(
                                 baseContext, "Poskusi ponovno",
@@ -75,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                             ).show()
 
                             numOfFails += 1
-                            if (numOfFails >= 2){
+                            if (numOfFails >= 2) {
 
                                 fogotpassword.visibility = View.VISIBLE
 
@@ -87,30 +92,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-
-
-
-
-
-
-
-    }
-
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser != null){
-           // reload();
-        }
-    }
-
-    private fun reload() {
-        TODO("Not yet implemented")
     }
 }
+
+
+
+
 
 
 

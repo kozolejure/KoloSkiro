@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 private lateinit var auth: FirebaseAuth
@@ -18,6 +19,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         auth = Firebase.auth
+        val db = Firebase.firestore
         val nameInput = findViewById<EditText>(R.id.name) as EditText
         val surnameInput = findViewById<EditText>(R.id.surname) as EditText
         val addresInput = findViewById<EditText>(R.id.naslov) as EditText
@@ -27,6 +29,8 @@ class RegisterActivity : AppCompatActivity() {
         var emailInput = findViewById<EditText>(R.id.email) as EditText
         var paswordNotSametext = findViewById<TextView>(R.id.notSamePasswords) as TextView
         var registorButton = findViewById<Button>(R.id.registerbutton) as Button
+
+
 
 
 
@@ -60,13 +64,31 @@ class RegisterActivity : AppCompatActivity() {
 
                             Toast.makeText(this@RegisterActivity, "Registracija uspešna", Toast.LENGTH_SHORT).show()
 
+
+                            val userObject = User(nameInput.text.toString(),surnameInput.text.toString(),
+                                emailInput.text.toString(),addresInput.text.toString(),hosteCheckbox.isChecked())
+
+
+
+                            db.collection("Users")
+                                .add(userObject)
+                                .addOnSuccessListener { documentReference ->
+                                    Toast.makeText(this@RegisterActivity, "Add", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this@RegisterActivity, "error", Toast.LENGTH_SHORT).show()
+                                }
+
+
+
+
                             val intent = Intent(this,MainActivity::class.java)
                             startActivity(intent)
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(baseContext, "Račun na naslov že obstaja",
+                            Toast.makeText(baseContext, "Račun že obstaja ali popravi geslo",
                                 Toast.LENGTH_SHORT).show()
 
 
