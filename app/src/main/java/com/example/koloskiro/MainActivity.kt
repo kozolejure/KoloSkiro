@@ -83,21 +83,23 @@ class MainActivity : AppCompatActivity() {
                             docRef.get().addOnSuccessListener { documentSnapshot ->
                                 val tempUser = documentSnapshot.toObject<User>()
                                 if (tempUser != null) {
-                                    getUser  = tempUser
+                                    getUser = tempUser
                                 }
 
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Lep pozdrav: "+getUser.name,
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
+
+
+                                val intent = Intent(this, ProviderHomeActivity::class.java)
+                                startActivity(intent)
 
                             }
-                            Log.w(TAG, "signInWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                baseContext, "Pozdravljen "+ getUser.name,
-                                Toast.LENGTH_SHORT
-                            ).show()
 
 
-                            val intent = Intent(this, ProviderHomeActivity::class.java)
-                            startActivity(intent)
 
 
 
