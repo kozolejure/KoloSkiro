@@ -13,14 +13,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 
 private lateinit var auth: FirebaseAuth
-
 private var numOfFails = 0
+private var getUser = User()
 
 class MainActivity : AppCompatActivity() {
+    val db = Firebase.firestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_page)
@@ -41,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
-
+        //pozabljeno geslo gumb/text
         fogotpassword.setOnClickListener {
 
             val intent = Intent(this, ForgotPasswordActivity::class.java)
@@ -54,9 +58,9 @@ class MainActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener {
             val password = paswordText.text.toString()
-            val email = usernameText.text.toString()
+            val email = usernameText.text.toString().toLowerCase()
 
-
+            //prevelrimo ali je kakšno polje prazno
             if (password.isEmpty() or email.isEmpty()) {
 
                 Toast.makeText(
@@ -67,18 +71,45 @@ class MainActivity : AppCompatActivity() {
 
             } else {
 
+                //če ni prazno gremo tukaj
+
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            val user = auth.currentUser
-                        } else {
 
+
+
+                            val docRef = db.collection("Users").document(email)
+                            docRef.get().addOnSuccessListener { documentSnapshot ->
+                                val tempUser = documentSnapshot.toObject<User>()
+                                if (tempUser != null) {
+                                    getUser  = tempUser
+                                }
+
+
+
+                            }
+                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                baseContext, "Pozdravljen "+ getUser.name,
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+
+                            val intent = Intent(this, ProviderHomeActivity::class.java)
+                            startActivity(intent)
+
+
+
+                        } else {//nepravilno geslo
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
                             Toast.makeText(
                                 baseContext, "Poskusi ponovno",
                                 Toast.LENGTH_SHORT
                             ).show()
 
+
+                            //Preverjamo ali izpišemo ponastavi geslo
                             numOfFails += 1
                             if (numOfFails >= 2) {
 
@@ -90,6 +121,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
             }
+
+
+
+
+
+
         }
 
     }
