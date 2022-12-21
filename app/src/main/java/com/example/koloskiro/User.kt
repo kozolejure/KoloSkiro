@@ -7,7 +7,7 @@ class User(
     val address : String,
     var isProvider: Boolean){
 
-        constructor() : this("test","","","",true){
+        constructor() : this("","","","",true){
     }
 
 

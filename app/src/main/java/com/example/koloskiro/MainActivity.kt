@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         val paswordText = findViewById<EditText>(R.id.password) as EditText
         val loginButton = findViewById<Button>(R.id.loginButton) as Button
         var fogotpassword = findViewById<TextView>(R.id.passwordReset) as TextView
+        var passNotRight = findViewById<TextView>(R.id.passwordorusernamenot) as TextView
+
+
         val text = "<u>Pozabljeno geslo?</u>"
         fogotpassword.setText(Html.fromHtml(text))
 
@@ -104,11 +107,7 @@ class MainActivity : AppCompatActivity() {
 
 
                         } else {//nepravilno geslo
-                            Log.w(TAG, "signInWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                baseContext, "Poskusi ponovno",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                           passNotRight.visibility = View.VISIBLE
 
 
                             //Preverjamo ali izpišemo ponastavi geslo
