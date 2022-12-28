@@ -1,5 +1,6 @@
 package com.example.koloskiro
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -50,11 +51,24 @@ class AddKoloSkiroActivity : AppCompatActivity() {
                 )
 
 
-                koloSkiro.document().set(koloSkiroObject)
+                koloSkiro.document().set(koloSkiroObject).addOnCompleteListener {
+
+                    val intent = Intent(this,ProviderHomeActivity::class.java)
+                    startActivity(intent)
+
+
+
+
+                }
 
                 }
 
             else{
+
+
+                //TODO
+                //nekaj je šlo narobe
+
 
 
 

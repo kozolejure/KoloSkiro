@@ -68,19 +68,7 @@ class RegisterActivity : AppCompatActivity() {
                             val userObject = User(nameInput.text.toString(),surnameInput.text.toString(),
                                 emailInput.text.toString().toLowerCase(),addresInput.text.toString(),hosteCheckbox.isChecked())
 
-/*
 
-                            db.collection("Users")
-                                .add(userObject)
-                                .addOnSuccessListener { documentReference ->
-                                    Toast.makeText(this@RegisterActivity, "Add", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener { e ->
-                                    Toast.makeText(this@RegisterActivity, "error", Toast.LENGTH_SHORT).show()
-                                }
-
-
-*/
 
                             val Uporabniki = db.collection("Users")
                             Uporabniki.document(emailInput.text.toString()).set(userObject)
