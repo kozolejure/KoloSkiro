@@ -11,6 +11,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
+
 private lateinit var auth: FirebaseAuth
 
 class AddKoloSkiroActivity : AppCompatActivity() {
@@ -47,7 +48,7 @@ class AddKoloSkiroActivity : AppCompatActivity() {
                     address = address.text.toString(),
                     owner = email,
                     TermsOfUse = termsOfUse.text.toString(),
-                    price = priceValue
+                    price = priceValue.toString()
                 )
 
 
@@ -55,6 +56,7 @@ class AddKoloSkiroActivity : AppCompatActivity() {
 
                     val intent = Intent(this,ProviderHomeActivity::class.java)
                     startActivity(intent)
+                    finish()
 
 
 

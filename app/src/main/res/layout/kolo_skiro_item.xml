@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="143dp"
                     android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@drawable/koloskirologo" />
             </LinearLayout>
 
             <LinearLayout
@@ -74,9 +74,9 @@
                     style="@style/buttonFull"
                     android:layout_width="119dp"
                     android:layout_height="48dp"
-                    android:layout_marginLeft="130dip"
+                    android:layout_marginLeft="125dip"
                     android:layout_weight="1"
-                    android:text="Izposja"
+                    android:text="Urejaj"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
