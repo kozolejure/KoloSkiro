@@ -5,8 +5,9 @@ class KoloSkiro(
     val price: String,
     val owner: String,
     val address: String,
-    var TermsOfUse: String) {
+    var TermsOfUse: String,
+    val isActive : Boolean) {
 
-    constructor() : this("","","","",""){
+    constructor() : this("","","","","",false){
     }
 }

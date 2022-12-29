@@ -3,6 +3,7 @@ package com.example.koloskiro
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -29,6 +30,7 @@ class AddKoloSkiroActivity : AppCompatActivity() {
         val price = findViewById<EditText>(R.id.inputPrice) as EditText
         val termsOfUse = findViewById<EditText>(R.id.InputTermsOfUse) as EditText
         val add = findViewById<Button>(R.id.addButton) as Button
+        val active = findViewById<CheckBox>(R.id.IsActive) as CheckBox
 
 
 
@@ -48,7 +50,9 @@ class AddKoloSkiroActivity : AppCompatActivity() {
                     address = address.text.toString(),
                     owner = email,
                     TermsOfUse = termsOfUse.text.toString(),
-                    price = priceValue.toString()
+                    price = priceValue.toString(),
+                    isActive = active.isChecked
+
                 )
 
 

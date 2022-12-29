@@ -51,6 +51,7 @@ class ProviderHomeActivity : AppCompatActivity() {
                     for (doc in value!!) {
                         doc.toObject<KoloSkiro>()?.let {
 
+
                             myKoloSkiro.add(it)
                            // myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
 
@@ -97,12 +98,14 @@ class ProviderHomeActivity : AppCompatActivity() {
 
 
 
+
         //val email = findViewById<EditText>(R.id.emainForgoten) as EditText
         val buttonAddKoloSkiro = findViewById<Button>(R.id.addKoloSkiro) as Button
 
         buttonAddKoloSkiro.setOnClickListener(){
             val intent = Intent(this,AddKoloSkiroActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
 
