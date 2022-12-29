@@ -18,6 +18,22 @@ private lateinit var auth: FirebaseAuth
 class AddKoloSkiroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val db = Firebase.firestore
+        val intent = intent
+        var isEdit = false
+        var IDI =""
+
+        var myObject = KoloSkiro()
+
+            try {
+                 myObject = intent.getSerializableExtra("Object") as KoloSkiro
+                 IDI = intent.getSerializableExtra("IDI") as String
+            }
+            catch (ex :Exception){
+
+                myObject.owner = "null"
+
+            }
+
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
         setContentView(R.layout.activity_add_kolo_skiro)
@@ -32,57 +48,88 @@ class AddKoloSkiroActivity : AppCompatActivity() {
         val add = findViewById<Button>(R.id.addButton) as Button
         val active = findViewById<CheckBox>(R.id.IsActive) as CheckBox
 
+        if(myObject.owner !="null"){
 
+            address.setText(myObject.address)
+            price.setText(myObject.price)
+            type.setText(myObject.type)
+            termsOfUse.setText(myObject.TermsOfUse)
+            active.isChecked = myObject.isActive
+            isEdit = true
+            add.setText("Uredi")
+
+
+
+
+
+
+        }
 
 
 
         add.setOnClickListener(){
 
 
-            if (type.text != null && address.text != null && price.text != null){
+            if(isEdit){
 
-                val koloSkiro = db.collection("KoloSkiro")
-
-                val priceValue: Double = price.getText().toString().toDouble()
-
-                var koloSkiroObject = KoloSkiro(
-                    type = type.text.toString(),
-                    address = address.text.toString(),
-                    owner = email,
-                    TermsOfUse = termsOfUse.text.toString(),
-                    price = priceValue.toString(),
-                    isActive = active.isChecked
-
-                )
+                if (type.text != null && address.text != null && price.text != null){
+                    val koloSkiro = db.collection("KoloSkiro")
+                    val priceValue: Double = price.getText().toString().toDouble()
+                    var koloSkiroObject = KoloSkiro(
+                        type = type.text.toString(),
+                        address = address.text.toString(),
+                        owner = email,
+                        TermsOfUse = termsOfUse.text.toString(),
+                        price = priceValue.toString(),
+                        isActive = active.isChecked)
 
 
-                koloSkiro.document().set(koloSkiroObject).addOnCompleteListener {
+                    koloSkiro.document(IDI).set(koloSkiroObject).addOnCompleteListener {
+                        val intent = Intent(this,ProviderHomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
 
-                    val intent = Intent(this,ProviderHomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-
-
-
+                    }
 
                 }
 
+                else{
+                    //TODO
+                    //nekaj je šlo narobe
                 }
-
-            else{
-
-
-                //TODO
-                //nekaj je šlo narobe
-
-
 
 
             }
 
+            else{
 
 
+                if (type.text != null && address.text != null && price.text != null){
+                    val koloSkiro = db.collection("KoloSkiro")
+                    val priceValue: Double = price.getText().toString().toDouble()
+                    var koloSkiroObject = KoloSkiro(
+                        type = type.text.toString(),
+                        address = address.text.toString(),
+                        owner = email,
+                        TermsOfUse = termsOfUse.text.toString(),
+                        price = priceValue.toString(),
+                        isActive = active.isChecked)
 
+
+                    koloSkiro.document().set(koloSkiroObject).addOnCompleteListener {
+                        val intent = Intent(this,ProviderHomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
+                    }
+
+                }
+
+                else{
+                    //TODO
+                    //nekaj je šlo narobe
+                }
+            }
         }
 
 

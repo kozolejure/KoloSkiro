@@ -1,12 +1,14 @@
 package com.example.koloskiro
 
+import java.io.Serializable
+
 class KoloSkiro(
-    val type: String,
-    val price: String,
-    val owner: String,
-    val address: String,
+    var type: String,
+    var price: String,
+    var owner: String,
+    var address: String,
     var TermsOfUse: String,
-    val isActive : Boolean) {
+    var isActive : Boolean): Serializable {
 
     constructor() : this("","","","","",false){
     }
