@@ -69,15 +69,6 @@
                     android:layout_height="wrap_content"
                     android:text="3.7" />
 
-                <Button
-                    android:id="@+id/button6"
-                    style="@style/buttonFull"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="125dip"
-                    android:layout_weight="1"
-                    android:text="Urejaj"
-                    tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
         </LinearLayout>

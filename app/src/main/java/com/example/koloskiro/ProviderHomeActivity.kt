@@ -2,21 +2,18 @@ package com.example.koloskiro
 
 import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.ListView
-import android.widget.Toast
-import com.example.koloskiro.databinding.ActivityAddKoloSkiroBinding
-import com.example.koloskiro.databinding.ActivityProviderHomeBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.example.koloskiro.databinding.KoloSkiroProviderItemBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+
 
 private lateinit var auth: FirebaseAuth
 
@@ -24,7 +21,7 @@ private lateinit var auth: FirebaseAuth
 
 class ProviderHomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityProviderHomeBinding
+    private lateinit var binding: KoloSkiroProviderItemBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +29,12 @@ class ProviderHomeActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val user = FirebaseAuth.getInstance().currentUser
         val email = user?.email.toString()
-        binding = ActivityProviderHomeBinding.inflate(layoutInflater)
+        //val editButton = findViewById<Button>(KoloSkiroProviderItemBinding.id.editButton) as Button
+
+
         setContentView(R.layout.activity_provider_home)
 
-
+       // KoloSkiroProviderItemBinding.
         fun getKoloSkiro():List<KoloSkiro>{
             val myKoloSkiro = ArrayList<KoloSkiro>()
             db.collection("KoloSkiro")
@@ -71,13 +70,14 @@ class ProviderHomeActivity : AppCompatActivity() {
         var myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
 
 
-        binding.listViewAdmin.isClickable = true
+       // binding.listViewAdmin.isClickable = true
         val list = findViewById<ListView>(R.id.listViewAdmin) as ListView
 
 
 
         Thread.sleep(10)
         list.adapter = MyAdapter(this,myKoloSkiro)
+        list.isClickable = true
 
 
 
@@ -85,6 +85,11 @@ class ProviderHomeActivity : AppCompatActivity() {
 
 
 
+        list.setOnItemClickListener(OnItemClickListener { list, v, pos, id ->
+
+            Log.i(TAG,"Hellos")
+
+        })
 
 
 
