@@ -1,5 +1,6 @@
 package com.example.koloskiro
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -16,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 private lateinit var auth: FirebaseAuth
 
 class AddKoloSkiroActivity : AppCompatActivity() {
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         val db = Firebase.firestore
         val intent = intent

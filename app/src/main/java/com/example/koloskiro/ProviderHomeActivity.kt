@@ -82,6 +82,9 @@ class ProviderHomeActivity : AppCompatActivity() {
 
             var myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
             val list = findViewById<ListView>(R.id.listViewAdmin) as ListView
+            Thread.sleep(100)
+            list.adapter = MyAdapter(this,myKoloSkiro)
+
 
         }
 

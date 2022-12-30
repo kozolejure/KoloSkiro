@@ -15,6 +15,13 @@
         android:theme="@style/Theme.KoloSkiro"
         tools:targetApi="31">
         <activity
+            android:name=".RentActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ClientHomeActivity"
             android:exported="false">
             <meta-data

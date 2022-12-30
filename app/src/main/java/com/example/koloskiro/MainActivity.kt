@@ -96,9 +96,19 @@ class MainActivity : AppCompatActivity() {
                                 ).show()
 
 
+                                if (getUser.isProvider) {
+                                    val intent = Intent(this, ProviderHomeActivity::class.java)
+                                    startActivity(intent)
+                                }
+                                else{
 
-                                val intent = Intent(this, ProviderHomeActivity::class.java)
-                                startActivity(intent)
+                                    val intent = Intent(this, ClientHomeActivity::class.java)
+                                    startActivity(intent)
+
+
+                                }
+
+
 
                             }
 
