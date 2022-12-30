@@ -8,8 +8,9 @@ class KoloSkiro(
     var owner: String,
     var address: String,
     var TermsOfUse: String,
-    var isActive : Boolean): Serializable {
+    var isActive : Boolean,
+    var inUse : Boolean): Serializable {
 
-    constructor() : this("","","","","",false){
+    constructor() : this("","","","","",false,false){
     }
 }

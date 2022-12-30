@@ -3,9 +3,11 @@ package com.example.koloskiro
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -49,6 +51,7 @@ class AddKoloSkiroActivity : AppCompatActivity() {
         val termsOfUse = findViewById<EditText>(R.id.InputTermsOfUse) as EditText
         val add = findViewById<Button>(R.id.addButton) as Button
         val active = findViewById<CheckBox>(R.id.IsActive) as CheckBox
+        val inusetxt = findViewById<TextView>(R.id.InUseText) as TextView
 
         if(myObject.owner !="null"){
 
@@ -83,7 +86,15 @@ class AddKoloSkiroActivity : AppCompatActivity() {
                         owner = email,
                         TermsOfUse = termsOfUse.text.toString(),
                         price = priceValue.toString(),
-                        isActive = active.isChecked)
+                        isActive = active.isChecked,
+                        inUse = myObject.inUse   )
+
+
+                    if(myObject.inUse){
+
+                        inusetxt.visibility = View.VISIBLE
+
+                    }
 
 
                     koloSkiro.document(IDI).set(koloSkiroObject).addOnCompleteListener {
@@ -115,7 +126,8 @@ class AddKoloSkiroActivity : AppCompatActivity() {
                         owner = email,
                         TermsOfUse = termsOfUse.text.toString(),
                         price = priceValue.toString(),
-                        isActive = active.isChecked)
+                        isActive = active.isChecked,
+                        inUse = false)
 
 
                     koloSkiro.document().set(koloSkiroObject).addOnCompleteListener {
