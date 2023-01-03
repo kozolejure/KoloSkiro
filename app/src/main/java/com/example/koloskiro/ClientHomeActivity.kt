@@ -2,6 +2,7 @@ package com.example.koloskiro
 
 import android.content.ContentValues
 import android.content.Intent
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,15 +11,15 @@ import android.widget.ListView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import kotlin.concurrent.thread
 
 class ClientHomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_home)
         val list = findViewById<ListView>(R.id.clientListView) as ListView
-
-
         val IDS = ArrayList<String>()
         val db = Firebase.firestore
         val user = FirebaseAuth.getInstance().currentUser
@@ -52,15 +53,36 @@ class ClientHomeActivity : AppCompatActivity() {
 
         }
 
+
+        val docRef = db.collection("Rents").whereEqualTo("end","progress")
+            .whereEqualTo("clientID",email)
+        docRef.get().addOnSuccessListener { documentSnapshot ->
+            val tempKoloSkiro = documentSnapshot.toObjects(RentData::class.java)
+            if (tempKoloSkiro != null) {
+
+                val intent = Intent(this,getPasswordActivity::class.java)
+                intent.putExtra("rentObject",tempKoloSkiro.first())
+                startActivity(intent)
+
+
+            Log.i("TAG",tempKoloSkiro.first().end.toString())
+
+            }
+
+        }
+
+
+
+
+
+
+
+
         var myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
 
         Thread.sleep(10)
         list.adapter = MyAdapter(this,myKoloSkiro)
         list.isClickable = true
-
-
-
-
 
 
 
@@ -72,6 +94,8 @@ class ClientHomeActivity : AppCompatActivity() {
             val list = findViewById<ListView>(R.id.clientListView) as ListView
             Thread.sleep(100)
             list.adapter = MyAdapter(this,myKoloSkiro)
+
+
 
 
         }
@@ -106,3 +130,4 @@ class ClientHomeActivity : AppCompatActivity() {
 
     }
 }
+
