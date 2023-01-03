@@ -15,4 +15,13 @@
         <item name="fontFamily">@font/quicksand</item>
 
     </style>
+
+    <style name="Theme.KoloSkiro.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.KoloSkiro.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.KoloSkiro.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

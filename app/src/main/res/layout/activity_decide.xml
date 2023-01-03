@@ -7,7 +7,7 @@
     tools:context=".decideActivity">
 
     <Button
-        android:id="@+id/declineButton"
+        android:id="@+id/acceptButton"
         style="@style/buttonFull"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
 
     <Button
 
-        android:id="@+id/button2"
+        android:id="@+id/declineButton"
         style="@style/buttonEmpty"
         android:layout_width="100dp"
         android:layout_height="48dp"
@@ -74,7 +74,7 @@
         app:layout_constraintVertical_bias="0.585" />
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/ClientEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="kozole.jure@gmail.com"
@@ -99,7 +99,7 @@
         app:layout_constraintVertical_bias="0.683" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/DeviceType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SkiroKolo 123"

@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
+import java.util.*
 
 class RentActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -36,6 +37,8 @@ class RentActivity : AppCompatActivity() {
 
 
 
+
+
         termsOfUse.setText(" "+myObject.TermsOfUse)
         price.setText(" "+myObject.price+" €/h")
         type.setText(" "+myObject.type)
@@ -45,13 +48,31 @@ class RentActivity : AppCompatActivity() {
         rentAdd.setOnClickListener(){
 
 
+           myObject.isActive = false
+
+
+            val update = db.collection("KoloSkiro")
+            update.document(IDI).set(myObject).addOnCompleteListener {
+
+            }
+
+
+
             val koloSkiro = db.collection("Rents")
 
             val current = LocalDateTime.now()
-            var RentObject = RentData(IDI,email,current, LocalDateTime.of(2000, 9, 10, 6, 40, 45),true)
+            var dateInString = current.year.toString()+"-"
+            dateInString = dateInString + current.monthValue.toString()+"-"
+            dateInString = dateInString + current.dayOfMonth.toString()+" "
+            dateInString = dateInString + current.hour.toString()+":"
+            dateInString = dateInString + current.minute.toString()
 
-            koloSkiro.document().set(RentObject).addOnCompleteListener {
-                val intent = Intent(this,ProviderHomeActivity::class.java)
+            var uniqueID = UUID.randomUUID().toString()
+
+            var RentObject = RentData(uniqueID,IDI,email,dateInString, "null",true,"")
+
+            koloSkiro.document(uniqueID).set(RentObject).addOnCompleteListener {
+                val intent = Intent(this,ClientHomeActivity::class.java)
                 startActivity(intent)
 
 

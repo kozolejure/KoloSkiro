@@ -2,15 +2,18 @@ package com.example.koloskiro
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.io.Serializable
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 class RentData(
+    var myID : String,
     var deviceID: String,
     var ClientID: String,
-    var start: LocalDateTime,
-    var end: LocalDateTime,
-    var toBeConfirmed: Boolean){
+    var start: String,
+    var end: String,
+    var toBeConfirmed: Boolean,
+    var pin:String ): Serializable {
 
 
 
@@ -18,10 +21,15 @@ class RentData(
     constructor() : this(
         "",
         "",
-        LocalDateTime.of(2000, 9, 10, 6, 40, 45),
-        LocalDateTime.of(2014, 9, 10, 6, 40, 45),
-        true){
+        "",
+        "",
+        "",
+        true,
+        ""
+        ){
     }
+
+
 
 
 
