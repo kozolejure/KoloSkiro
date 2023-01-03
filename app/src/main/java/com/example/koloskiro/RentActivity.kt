@@ -69,7 +69,7 @@ class RentActivity : AppCompatActivity() {
 
             var uniqueID = UUID.randomUUID().toString()
 
-            var RentObject = RentData(uniqueID,IDI,email,dateInString, "null",true,"")
+            var RentObject = RentData(uniqueID,IDI,email,dateInString, "null",true,false,"")
 
             koloSkiro.document(uniqueID).set(RentObject).addOnCompleteListener {
                 val intent = Intent(this,ClientHomeActivity::class.java)

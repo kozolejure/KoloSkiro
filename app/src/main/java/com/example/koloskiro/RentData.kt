@@ -13,6 +13,7 @@ class RentData(
     var start: String,
     var end: String,
     var toBeConfirmed: Boolean,
+    var counting: Boolean,
     var pin:String ): Serializable {
 
 
@@ -25,6 +26,7 @@ class RentData(
         "",
         "",
         true,
+        false,
         ""
         ){
     }

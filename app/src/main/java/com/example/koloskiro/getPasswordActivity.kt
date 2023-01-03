@@ -65,10 +65,20 @@ class getPasswordActivity : AppCompatActivity() {
         button.setOnClickListener(){
 
 
+            Rent.counting = true
 
-            val intent = Intent(this,CounterActivity::class.java)
-            intent.putExtra("rentObject",Rent)
-            startActivity(intent)
+
+            val update = db.collection("KoloSkiro")
+            update.document(Rent.myID).set(Rent).addOnCompleteListener {
+
+                val intent = Intent(this,CounterActivity::class.java)
+                intent.putExtra("rentObject",Rent)
+                startActivity(intent)
+
+
+            }
+
+
 
 
 
