@@ -6,6 +6,9 @@ import android.widget.Button
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class CounterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +45,17 @@ class CounterActivity : AppCompatActivity() {
         button.setOnClickListener(){
 
 
+            val current = LocalDateTime.now()
+            var dateString = current.dayOfMonth.toString()+"."+current.monthValue.toString()+"."+current.year
+            val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d.M.u")
+            var dateString2 = LocalDate.parse(dateString, dateFormatter)
+            Rent.end = dateString2.toString()
+
+
                     KoloSkiro.inUse = false
                     KoloSkiro.isActive = true
-
                     Rent.counting = false
-                    Rent.end = "1.1.1."
+
 
                     val update = db.collection("Rents")
                     update.document(Rent.myID).set(Rent).addOnCompleteListener {
