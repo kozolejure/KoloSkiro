@@ -2,14 +2,16 @@ package com.example.koloskiro
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RentActivity : AppCompatActivity() {
@@ -61,19 +63,34 @@ class RentActivity : AppCompatActivity() {
             val koloSkiro = db.collection("Rents")
 
             val current = LocalDateTime.now()
-            var dateInString = current.year.toString()+"-"
-            dateInString = dateInString + current.monthValue.toString()+"-"
+
+            var dateString = current.dayOfMonth.toString()+"."+current.monthValue.toString()+"."+current.year
+
+            val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d.M.u")
+
+
+             var dateString2 = LocalDate.parse(dateString, dateFormatter)
+
+
+
+/*
+            var dateInString = current.year.toString()+""
+            dateInString = dateInString + current.monthValue.toString()+""
             dateInString = dateInString + current.dayOfMonth.toString()+" "
-            dateInString = dateInString + current.hour.toString()+":"
+            dateInString = dateInString + current.hour.toString()+""
             dateInString = dateInString + current.minute.toString()
+
+
+ */
 
             var uniqueID = UUID.randomUUID().toString()
 
-            var RentObject = RentData(uniqueID,IDI,email,dateInString, "null",true,false,"")
+            var RentObject = RentData(uniqueID,IDI,email,dateString2.toString(), "null",true,false,"")
 
             koloSkiro.document(uniqueID).set(RentObject).addOnCompleteListener {
                 val intent = Intent(this,ClientHomeActivity::class.java)
                 startActivity(intent)
+                finish()
 
 
             }

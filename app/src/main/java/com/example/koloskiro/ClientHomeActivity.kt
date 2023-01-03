@@ -58,11 +58,26 @@ class ClientHomeActivity : AppCompatActivity() {
             .whereEqualTo("clientID",email)
         docRef.get().addOnSuccessListener { documentSnapshot ->
             val tempKoloSkiro = documentSnapshot.toObjects(RentData::class.java)
-            if (tempKoloSkiro != null) {
+            if (tempKoloSkiro.isNotEmpty()) {
 
-                val intent = Intent(this,getPasswordActivity::class.java)
-                intent.putExtra("rentObject",tempKoloSkiro.first())
-                startActivity(intent)
+                if (tempKoloSkiro.first().counting){
+
+                    val intent = Intent(this,CounterActivity::class.java)
+                    intent.putExtra("rentObject",tempKoloSkiro.first())
+                    startActivity(intent)
+
+                }
+                else{
+
+                    val intent = Intent(this,getPasswordActivity::class.java)
+                    intent.putExtra("rentObject",tempKoloSkiro.first())
+                    startActivity(intent)
+
+
+                }
+
+
+
 
 
             Log.i("TAG",tempKoloSkiro.first().end.toString())

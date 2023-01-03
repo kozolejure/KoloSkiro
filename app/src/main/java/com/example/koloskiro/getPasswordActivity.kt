@@ -28,6 +28,15 @@ class getPasswordActivity : AppCompatActivity() {
         val db = Firebase.firestore
 
 
+        if (Rent.counting){
+
+            val intent = Intent(this,CounterActivity::class.java)
+            intent.putExtra("rentObject",Rent)
+            startActivity(intent)
+
+        }
+
+
 
         val docRef = db.collection("KoloSkiro").document(Rent.deviceID)
         docRef.get().addOnSuccessListener { documentSnapshot ->
@@ -47,7 +56,7 @@ class getPasswordActivity : AppCompatActivity() {
 
 
 
-        val  E1 = findViewById<EditText>(R.id.editText2) as EditText
+        val  E1 = findViewById<EditText>(R.id.editText1) as EditText
         val  E2 = findViewById<EditText>(R.id.editText2) as EditText
         val  E3 = findViewById<EditText>(R.id.editText3) as EditText
         val  E4 = findViewById<EditText>(R.id.editText4) as EditText
@@ -68,12 +77,13 @@ class getPasswordActivity : AppCompatActivity() {
             Rent.counting = true
 
 
-            val update = db.collection("KoloSkiro")
+            val update = db.collection("Rents")
             update.document(Rent.myID).set(Rent).addOnCompleteListener {
 
                 val intent = Intent(this,CounterActivity::class.java)
                 intent.putExtra("rentObject",Rent)
                 startActivity(intent)
+                finish()
 
 
             }
