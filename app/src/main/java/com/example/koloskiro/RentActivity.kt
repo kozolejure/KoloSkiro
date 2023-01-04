@@ -57,9 +57,6 @@ class RentActivity : AppCompatActivity() {
             update.document(IDI).set(myObject).addOnCompleteListener {
 
             }
-
-
-
             val koloSkiro = db.collection("Rents")
 
             val current = LocalDateTime.now()
@@ -85,7 +82,7 @@ class RentActivity : AppCompatActivity() {
 
             var uniqueID = UUID.randomUUID().toString()
 
-            var RentObject = RentData(uniqueID,IDI,email,dateString2.toString(), "null",true,false,"")
+            var RentObject = RentData(uniqueID,IDI,email,myObject.owner,dateString2.toString(), "null",true,false,"")
 
             koloSkiro.document(uniqueID).set(RentObject).addOnCompleteListener {
                 val intent = Intent(this,ClientHomeActivity::class.java)

@@ -30,13 +30,13 @@
         app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintVertical_bias="0.973" />
 
     <Button
         android:id="@+id/IzposojeButton"
         style="@style/buttonFull"
-        android:layout_width="163dp"
-        android:layout_height="48dp"
+        android:layout_width="168dp"
+        android:layout_height="47dp"
         android:clickable="true"
         android:text="Izposoje"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,14 +48,15 @@
 
     <ListView
         android:id="@+id/listViewAdmin"
-        android:layout_width="411dp"
-        android:layout_height="547dp"
+        android:layout_width="408dp"
+        android:layout_height="556dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.491" />
 
     <ImageButton
         android:id="@+id/refreshButton"

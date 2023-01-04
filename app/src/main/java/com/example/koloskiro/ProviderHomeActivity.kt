@@ -28,6 +28,8 @@ class ProviderHomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val IDS = ArrayList<String>()
+        val IDSRents = ArrayList<String>()
+
         var RentDateList = ArrayList<RentData>()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_provider_home)
@@ -45,89 +47,75 @@ class ProviderHomeActivity : AppCompatActivity() {
 
 
 
-        fun getKoloSkiro():List<KoloSkiro>{
-            val myKoloSkiro = ArrayList<KoloSkiro>()
-            db.collection("KoloSkiro")
-                .whereEqualTo("owner", email)
-                .addSnapshotListener { value, e ->
+        fun getKoloSkiro(){
+            val docRef = db.collection("KoloSkiro").whereEqualTo("owner",email)
+            docRef.get().addOnSuccessListener { documentSnapshot ->
+                val tempKoloSkiro = documentSnapshot.toObjects(KoloSkiro::class.java)
+                if (tempKoloSkiro.isNotEmpty()) {
 
-                    if (e != null) {
-                        Log.w(TAG, "Listen failed.", e)
-                        return@addSnapshotListener
+                    if (tempKoloSkiro.isNotEmpty()){
 
-                    }
-                    IDS.clear()
-                    for (doc in value!!) {
-                        doc.toObject<KoloSkiro>()?.let {
+                        val list = findViewById<ListView>(R.id.listViewAdmin) as ListView
+                        list.adapter = MyAdapter(this, tempKoloSkiro as ArrayList<KoloSkiro>)
+                        list.isClickable = true
 
+                        IDS.clear()
+                        for(item in tempKoloSkiro){
 
-                            myKoloSkiro.add(it)
-                            IDS.add(doc.id)
-
-                           // myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
+                            IDS.add(item.myID)
 
                         }
-
                     }
-
                 }
 
-
-
-            return myKoloSkiro
+            }
 
         }
-        fun getToBeAccepted():List<RentData>{
-            val RentDateList = ArrayList<RentData>()
-            db.collection("Rents")
+
+        fun getToBeAccepted(){
+            val docRef = db.collection("Rents")
                 .whereEqualTo("toBeConfirmed", true)
-                .addSnapshotListener { value, e ->
+                .whereEqualTo("ownerID", email)
+                docRef.get().addOnSuccessListener { documentSnapshot ->
+                val tempRents = documentSnapshot.toObjects(RentData::class.java)
+                if (tempRents.isNotEmpty()) {
+                        val docRef = db.collection("KoloSkiro").document(tempRents.first().deviceID)
+                        docRef.get().addOnSuccessListener { documentSnapshot ->
+                            val tempUser = documentSnapshot.toObject<KoloSkiro>()
 
-                    if (e != null) {
-                        Log.w(TAG, "Listen failed.", e)
-                        return@addSnapshotListener
 
-                    }
-                    IDS.clear()
-                    for (doc in value!!) {
-                        doc.toObject<RentData>()?.let {
+                            if (tempUser != null) {
 
-                            RentDateList.add(it)
+
+                                val intent = Intent(this,decideActivity::class.java)
+                                intent.putExtra("Object",tempRents.first())
+                                intent.putExtra("deviceType",tempUser.type)
+                                intent.putExtra("idOfRent", tempRents.first().myID)
+                                startActivity(intent)
+
+
+                            }
 
                         }
 
                     }
-
                 }
+            }
 
-            return RentDateList
-        }
-        RentDateList = getToBeAccepted() as ArrayList<RentData>
+
 
         val refresh = findViewById<ImageButton>(R.id.refreshButton) as ImageButton
 
         refresh.setOnClickListener(){
 
-            Log.i(TAG,databaseList().count().toString())
-
-
-            Log.i(TAG,RentDateList.count().toString())
-
-            var myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
-            val list = findViewById<ListView>(R.id.listViewAdmin) as ListView
-            Thread.sleep(100)
-            list.adapter = MyAdapter(this,myKoloSkiro)
+            getKoloSkiro()
 
 
         }
 
-        var myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
+        getKoloSkiro()
 
         val list = findViewById<ListView>(R.id.listViewAdmin) as ListView
-
-        Thread.sleep(10)
-        list.adapter = MyAdapter(this,myKoloSkiro)
-        list.isClickable = true
         list.setOnItemClickListener{ list, v, pos, id ->
 
             val idCurent = IDS[pos]
@@ -156,9 +144,8 @@ class ProviderHomeActivity : AppCompatActivity() {
 
 
         val buttonAddKoloSkiro = findViewById<Button>(R.id.addKoloSkiro) as Button
-
         buttonAddKoloSkiro.setOnClickListener(){
-            getKoloSkiro()
+           // getKoloSkiro()
             val intent = Intent(this,AddKoloSkiroActivity::class.java)
             startActivity(intent)
             finish()
@@ -171,37 +158,9 @@ class ProviderHomeActivity : AppCompatActivity() {
         val buutonOffer = findViewById<Button>(R.id.IzposojeButton) as Button
         buutonOffer.setOnClickListener(){
 
+            getToBeAccepted()
 
-        if (RentDateList.isEmpty()){
-            RentDateList = getToBeAccepted() as ArrayList<RentData>
-
-        }
-
-        else{
-
-           var tempRent =  RentDateList.first()
-
-            val docRef = db.collection("KoloSkiro").document(tempRent.deviceID)
-            docRef.get().addOnSuccessListener { documentSnapshot ->
-                val tempUser = documentSnapshot.toObject<KoloSkiro>()
-                Thread.sleep(20)
-
-                if (tempUser != null) {
-
-
-                    val intent = Intent(this,decideActivity::class.java)
-                    intent.putExtra("Object",tempRent)
-                    intent.putExtra("deviceType",tempUser.type)
-                    intent.putExtra("idOfRent", tempRent.myID)
-                    startActivity(intent)
-
-
-                }
-
-            }
-        }
-
-    }
+         }
 
 
     }

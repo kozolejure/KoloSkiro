@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
+import java.util.*
 
 
 private lateinit var auth: FirebaseAuth
@@ -81,6 +81,7 @@ class AddKoloSkiroActivity : AppCompatActivity() {
                     val koloSkiro = db.collection("KoloSkiro")
                     val priceValue: Double = price.getText().toString().toDouble()
                     var koloSkiroObject = KoloSkiro(
+                        myID = myObject.myID,
                         type = type.text.toString(),
                         address = address.text.toString(),
                         owner = email,
@@ -118,9 +119,11 @@ class AddKoloSkiroActivity : AppCompatActivity() {
 
 
                 if (type.text != null && address.text != null && price.text != null){
+                    var uniqueID = UUID.randomUUID().toString()
                     val koloSkiro = db.collection("KoloSkiro")
                     val priceValue: Double = price.getText().toString().toDouble()
                     var koloSkiroObject = KoloSkiro(
+                        myID =uniqueID,
                         type = type.text.toString(),
                         address = address.text.toString(),
                         owner = email,
@@ -130,7 +133,7 @@ class AddKoloSkiroActivity : AppCompatActivity() {
                         inUse = false)
 
 
-                    koloSkiro.document().set(koloSkiroObject).addOnCompleteListener {
+                    koloSkiro.document(uniqueID).set(koloSkiroObject).addOnCompleteListener {
                         val intent = Intent(this,ProviderHomeActivity::class.java)
                         startActivity(intent)
                         finish()

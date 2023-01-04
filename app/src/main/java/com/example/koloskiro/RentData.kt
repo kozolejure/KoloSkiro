@@ -10,6 +10,7 @@ class RentData(
     var myID : String,
     var deviceID: String,
     var ClientID: String,
+    var OwnerID: String,
     var start: String,
     var end: String,
     var toBeConfirmed: Boolean,
@@ -20,6 +21,7 @@ class RentData(
 
     @RequiresApi(Build.VERSION_CODES.O)
     constructor() : this(
+        "",
         "",
         "",
         "",

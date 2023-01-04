@@ -28,28 +28,28 @@ class ClientHomeActivity : AppCompatActivity() {
 
 
 
-        fun getKoloSkiro():List<KoloSkiro>{
-            val myKoloSkiro = ArrayList<KoloSkiro>()
-            db.collection("KoloSkiro")
-                .whereEqualTo("active", true)
-                .addSnapshotListener { value, e ->
+        fun getKoloSkiro(){
+            val docRef = db.collection("KoloSkiro").whereEqualTo("active",true)
+            docRef.get().addOnSuccessListener { documentSnapshot ->
+                val tempKoloSkiro = documentSnapshot.toObjects(KoloSkiro::class.java)
+                if (tempKoloSkiro.isNotEmpty()) {
 
-                    if (e != null) {
-                        Log.w(ContentValues.TAG, "Listen failed.", e)
-                        return@addSnapshotListener
+                    if (tempKoloSkiro.isNotEmpty()){
 
-                    }
-                    IDS.clear()
-                    for (doc in value!!) {
-                        doc.toObject<KoloSkiro>()?.let {
+                        val list = findViewById<ListView>(R.id.clientListView) as ListView
+                        list.adapter = MyAdapter(this, tempKoloSkiro as ArrayList<KoloSkiro>)
+                        list.isClickable = true
 
-                            myKoloSkiro.add(it)
-                            IDS.add(doc.id)
+                        IDS.clear()
+                        for(item in tempKoloSkiro){
+
+                            IDS.add(item.myID)
 
                         }
                     }
                 }
-            return myKoloSkiro
+
+            }
 
         }
 
@@ -75,43 +75,15 @@ class ClientHomeActivity : AppCompatActivity() {
 
 
                 }
-
-
-
-
-
-            Log.i("TAG",tempKoloSkiro.first().end.toString())
-
             }
-
         }
 
-
-
-
-
-
-
-
-        var myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
-
-        Thread.sleep(10)
-        list.adapter = MyAdapter(this,myKoloSkiro)
-        list.isClickable = true
-
-
+      getKoloSkiro()
 
 
         refresh.setOnClickListener(){
 
-
-            var myKoloSkiro = getKoloSkiro() as ArrayList<KoloSkiro>
-            val list = findViewById<ListView>(R.id.clientListView) as ListView
-            Thread.sleep(100)
-            list.adapter = MyAdapter(this,myKoloSkiro)
-
-
-
+           getKoloSkiro()
 
         }
 
